@@ -3,13 +3,15 @@ import pymysql.cursors
 import datetime
 import DC
 import tushare as ts
-
+import Config as config
 
 def model_eva(stock,state_dt,para_window,para_dc_window):
     # 建立数据库连接，设置tushare token
-    db = pymysql.connect(host='127.0.0.1', user='root', passwd='admin', db='stock', charset='utf8')
+    db = pymysql.connect(host=config.getvalue("db", "host"), user=config.getvalue("db", "user"),
+                         passwd=config.getvalue("db", "passwd"),
+                         db=config.getvalue("db", "dbname"), charset=config.getvalue("db", "charset"))
     cursor = db.cursor()
-    ts.set_token('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    ts.set_token('009126737252b046badcfa9071d852f55aff537d18d68044fd360453')
     pro = ts.pro_api()
     # 建评估时间序列, para_window参数代表回测窗口长度
     model_test_date_start = (datetime.datetime.strptime(state_dt, '%Y-%m-%d') - datetime.timedelta(days=para_window)).strftime(

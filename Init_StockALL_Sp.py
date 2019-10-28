@@ -1,7 +1,7 @@
 import datetime
 import tushare as ts
 import pymysql
-
+import Config as config
 if __name__ == '__main__':
 
     # 设置tushare pro的token并获取连接
@@ -12,7 +12,9 @@ if __name__ == '__main__':
     time_temp = datetime.datetime.now() - datetime.timedelta(days=1)
     end_dt = time_temp.strftime('%Y%m%d')
     # 建立数据库连接,剔除已入库的部分
-    db = pymysql.connect(host='rm-2zenk50lop6a1jdg4mo.mysql.rds.aliyuncs.com', user='xyt3', passwd='Xyt3@1234', db='test', charset='utf8')
+    db = pymysql.connect(host=config.getvalue("db", "host"), user=config.getvalue("db", "user"),
+                         passwd=config.getvalue("db", "passwd"),
+                         db=config.getvalue("db", "dbname"), charset=config.getvalue("db", "charset"))
     cursor = db.cursor()
     # 设定需要获取数据的股票池
     stock_pool = ['603912.SH','300666.SZ','300618.SZ','002049.SZ','300672.SZ']

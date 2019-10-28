@@ -1,9 +1,11 @@
 import pymysql.cursors
 import Deal
-
+import Config as config
 def buy(stock_code,opdate,buy_money):
     # 建立数据库连接
-    db = pymysql.connect(host='127.0.0.1', user='root', passwd='admin', db='stock', charset='utf8')
+    db = pymysql.connect(host=config.getvalue("db", "host"), user=config.getvalue("db", "user"),
+                         passwd=config.getvalue("db", "passwd"),
+                         db=config.getvalue("db", "dbname"), charset=config.getvalue("db", "charset"))
     cursor = db.cursor()
     deal_buy = Deal.Deal(opdate)
     #后买入
@@ -47,7 +49,9 @@ def buy(stock_code,opdate,buy_money):
 
 def sell(stock_code,opdate,predict):
     # 建立数据库连接
-    db = pymysql.connect(host='127.0.0.1', user='root', passwd='admin', db='stock', charset='utf8')
+    db = pymysql.connect(host=config.getvalue("db", "host"), user=config.getvalue("db", "user"),
+                         passwd=config.getvalue("db", "passwd"),
+                         db=config.getvalue("db", "dbname"), charset=config.getvalue("db", "charset"))
     cursor = db.cursor()
 
     deal = Deal.Deal(opdate)

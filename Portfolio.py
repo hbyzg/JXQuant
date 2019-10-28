@@ -3,14 +3,16 @@ import datetime
 import pymysql
 import copy
 import tushare as ts
-
+import Config as config
 
 # 返回的resu中 特征值按由小到大排列，对应的是其特征向量
 def get_portfolio(stock_list,state_dt,para_window):
     # 建数据库连接，设置Tushare的token
-    db = pymysql.connect(host='127.0.0.1', user='root', passwd='admin', db='stock', charset='utf8')
+    db = pymysql.connect(host=config.getvalue("db", "host"), user=config.getvalue("db", "user"),
+                         passwd=config.getvalue("db", "passwd"),
+                         db=config.getvalue("db", "dbname"), charset=config.getvalue("db", "charset"))
     cursor = db.cursor()
-    ts.set_token('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    ts.set_token(config.getvalue("user", "token"))
     pro = ts.pro_api()
 
     portfilio = stock_list
